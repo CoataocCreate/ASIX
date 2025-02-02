@@ -15,7 +15,8 @@ Core is the main Object of Screen and contains all methods you can use it like :
 its take `width` of screen and take `height` of screen
 and last flags so flags are like special effects we can put on window and rendering 
 flags are `borderless` makes screen without any border title buttons 
-`resizeable` makes screen resizeable and `coreinf` just shows all info about window like :
+`resizeable` makes screen resizeable and `coreinf` just shows all info about window and `optimize` 
+is a perfomance enchancer like :
 ```
 width : 800
 height : 600
@@ -25,7 +26,7 @@ font : <pygame.font.Font object at 0x0000017138B2EFA0>
 type : <Asix.Core>
 version : 7.1
 ```
-! important to note optimize may not work on all devices and cause proformance issue and only works on (WINDOWS OS)
+! important to note `optimize` flag may not work on all devices and cause proformance issue and only works on (WINDOWS OS)
 
 ---
 
