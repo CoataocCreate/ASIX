@@ -100,6 +100,45 @@ exit is a function that get set at the outside of the loop at end its terminate 
 ```
 core.exit() 
 ```
+---
+
+### Additional Methods
+these methods can get called direct without `core.`
+
+#### sic :
+sic is a sin cos tan calcultion function its structure 
+```python
+def sic(center:int, radius:int, angle:int, typ:str, startmul:int=0, endmul:int=0):
+          if typ == 's':
+           return center + radius * sin(angle)
+          if typ == 'c':
+           return center + radius * cos(angle)
+          if typ == 't':
+           return center + radius * tan(angle)
+```
+its can be used for examples :
+
+a circle moving in a circle
+```
+from asix import *
+
+_ = Core(600, 600, 'optimize')
+
+angle = 0
+
+while True:
+    _.quit('esc')
+    _.color(0, 0, 0)
+
+    _.globe(sic(300, 100, angle, 'c'), sic(300, 100, angle, 's'), 70, (255, 255, 255))
+
+    angle += 0.001
+
+    _.flip()
+
+_.exit()
+```
+its just calculate the radius x, y of a circle and have arg selector 's' for sin and 'c' for cos and 't' for tan
 
 ---
 
