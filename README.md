@@ -23,6 +23,10 @@ font : <pygame.font.Font object at 0x0000017138B2EFA0>
 type : <Asix.Core>
 version : 7.1
 ```
+! important to note optimize may not work on all devices and cause proformance issue and only works on (WINDOWS OS)
+
+---
+
 ### Core Built-in's
 
 #### R specifier
