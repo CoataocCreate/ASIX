@@ -189,6 +189,12 @@ dt.fetch(key)
 
 dt.delete(key)
 
+! you can make as many as wanted like
+
+doreamon = DTYPE()
+
+this one is not linked to dt
+
 ```
 ! Its Optional
 
