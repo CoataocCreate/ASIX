@@ -299,3 +299,37 @@ used to get a pic of window
 def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> None:
 ```
 no `core.` required
+
+---
+
+# Asix Release Notes
+
+## [v7.6] -2025
+
+### Added
+
+- Error Handling Added (CORE)
+
+- Added Support for Math functions [sin, cos, tan] => (sic)
+
+- Added Build-in Circle Drawer (Globe)
+
+- Added Caption and Icon Changer functions (caption / icon)
+
+- Added function to improve Image Handling (iload, isize) {iload loads image, isize resize image}
+
+### Changed
+
+- Removed unused Lib Modules (Imports)
+
+- Improved CORE Structure
+
+- Cache JIT Compiler Removed
+
+- Removed Multi-Set ColorList (draw) improved speed, logic
+
+- Removed unused EarlyTesting methods (fscript / mouse_button / mouse_pos / trn {used for Triangle Draw})
+
+### Fixed
+
+- Fixed Logic Error Not specified self on (Core.[width, height]) inside error handle
