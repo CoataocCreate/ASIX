@@ -140,6 +140,23 @@ _.exit()
 ```
 its just calculate the radius x, y of a circle and have arg selector 's' for sin and 'c' for cos and 't' for tan
 
+
+#### iload 
+iload loads an image like
+```
+img = iload(path)
+```
+
+#### isize
+isize resize a loaded img like 
+```
+isize(img, width, height)
+```
+or can be used with iload mentioned before
+```
+img = isize(iload(path), width, height)
+```
+
 ---
 
 basic structure
