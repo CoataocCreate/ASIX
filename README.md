@@ -74,8 +74,9 @@ core.globe(100, 100, 70, (255, 255, 255), (r, g ,b), 10)
 blit used for drawing images in mainloop like :
 
 ```
-core.blit(img, x, y, optional_resize_width, optional_resize_height)
+core.blit(*args)
 ```
+works like pygame one like a surface and img or just img with x, y
 
 ---
 
@@ -119,6 +120,27 @@ used to set window icon like
 ```
 core.icon(loaded_img)
 ```
+
+#### Font
+this function used to make simple font like :
+```
+newfont = core.Font(fontpath=None, size)
+```
+if you want custom font .ttf or .otf do like this
+```
+# add your font path and create a font object
+newfont = core.Font(fontpath="myfont.ttf", size)
+
+# use that font to render text
+text = newfont.render("Hello, Asix!", True, color(r, g, b))
+
+# get its rect and Set up the position for the text
+text_rect = text.get_rect(center=(400, 300))
+
+# now draw it with core.blit
+core.blit(text, text_rect)
+```
+thats it
 
 ---
 
