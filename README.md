@@ -78,6 +78,21 @@ core.blit(*args)
 ```
 works like pygame one like a surface and img or just img with x, y
 
+#### key / K
+the key is a function that we can use with K to written very short input management script like 
+```
+# init it ! Optional
+ky = key()
+
+# Use K for Keys and ky for Detection of that key like
+if key[K("W")]
+  print('pressed W')
+  ...
+
+...
+```
+or can use without init like `key()[K('W')]: ...`
+
 ---
 
 ### Core Methods
