@@ -93,6 +93,13 @@ if key[K("W")]
 ```
 or can use without init like `key()[K('W')]: ...`
 
+#### text
+text function is a basic text renderer like 
+```
+core.text(size, color, text, x, y, font_type: optional, rotation: require a angle var)
+```
+its just print that text in window
+
 ---
 
 ### Core Methods
