@@ -289,3 +289,12 @@ self.GLSO = {
 ```
 GLSO (Global Library System Object)
 Core have these and you can access them by `core.screen` and use that to use pygame function directly on the surface on asix
+
+# Easter Eggs 🎊
+
+### Screenshot
+used to get a pic of window 
+```
+def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> None:
+```
+no `core.` required
