@@ -44,6 +44,29 @@ core.draw((r, g, b), rect, ...)
 ```
 its can accept multiple rects at once like shown up
 
+#### globe
+
+this function used to create circles its have multiple args 
+```python
+def globe(
+    x: Any,
+    y: Any,
+    radius: Any,
+    fill_color: Any,
+    border_color: Any | None = None,
+    border_width: int = 0
+) -> None
+```
+its takes x-pos and y-pos and radius means size of circles and fill_color means color of circle 
+and border_color means border color of circle 
+and border_width of circle like
+
+```
+core.globe(100, 100, 70, (255, 255, 255), (r, g ,b), 10)
+
+!Note If you dont want border skip border_color and border_width args
+```
+
 ---
 
 ### Core Methods
