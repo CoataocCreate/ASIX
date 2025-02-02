@@ -181,3 +181,22 @@ while True:
 
 _.exit()
 ```
+
+---
+
+## Details 
+
+### Core Object
+```
+self.GLSO = {
+                     'width':self.width,
+                     'height':self.height,
+                     'flags':self.flag,
+                     'clock':self.clock, 
+                     'font':self.font,
+                     'type':"<Asix.Core>", 
+                     'version': "7.1"
+                     }
+```
+GLSO (Global Library System Object)
+Core have these and you can access them by `core.screen` and use that to use pygame function directly on the surface on asix
