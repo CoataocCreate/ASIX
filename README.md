@@ -107,6 +107,19 @@ exit is a function that get set at the outside of the loop at end its terminate 
 ```
 core.exit() 
 ```
+
+#### caption
+used to set window title like
+```
+core.caption(str)
+```
+
+#### icon
+used to set window icon like 
+```
+core.icon(loaded_img)
+```
+
 ---
 
 ### Additional Methods
@@ -163,6 +176,21 @@ or can be used with iload mentioned before
 ```
 img = isize(iload(path), width, height)
 ```
+
+### DTYPE Local DataClass
+its a local DataClass can use it to `store`, `fetch`, `delete` can store any datatype
+and its key, value nature like 
+```
+dt = DTYPE()
+
+dt.store(key, value)
+
+dt.fetch(key)
+
+dt.delete(key)
+
+```
+! Its Optional
 
 ---
 
