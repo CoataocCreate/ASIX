@@ -70,6 +70,13 @@ core.globe(100, 100, 70, (255, 255, 255), (r, g ,b), 10)
 !Note If you dont want border skip border_color and border_width args
 ```
 
+#### blit :
+blit used for drawing images in mainloop like :
+
+```
+core.blit(img, x, y, optional_resize_width, optional_resize_height)
+```
+
 ---
 
 ### Core Methods
