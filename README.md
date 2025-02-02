@@ -5,14 +5,8 @@ The Asix Graphics Library
 Asix is a 2d python library build on top pygame engine its fully support pygame methods in its Core and also some methods of asix work with pygame
 methods are simple but powerfull
 
-! Its not on pip yet so dont run `pip install asix`
-instead do
-
-1. Copy asix.py
-2. put in your main project
-3. write "from asix import *"
-4. install pygame
-5. thats it
+## Install
+Run `pip install asix`
 
 ### Core
 Core is the main Object of Screen and contains all methods you can use it like :
