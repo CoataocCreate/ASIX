@@ -47,6 +47,17 @@ core.draw((r, g, b), rect, ...)
 ```
 its can accept multiple rects at once like shown up
 
+#### polygon
+
+this function draw on points like for traingle we need 3 points 
+this function points not flipped like pygame.draw.polygon have unside down points
+its auto correct them like 
+```
+points = [(100, 100), (200, 100), (150, 200)]
+core.polygon(color, points)
+```
+Draws a Triangle
+
 #### globe
 
 this function used to create circles its have multiple args 
