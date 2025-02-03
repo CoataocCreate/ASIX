@@ -30,10 +30,11 @@ version : 7.1
 ! important to note `optimize` or `optimized` flag may not work on all devices and cause proformance issue and 
 only works on (WINDOWS OS)
 
-Opengl Renderer Flag `optimized opengl`
+Opengl Renderer Flag `opengl`
 change the rendering from pygame 2d render to opengl 3d render 
 Required Knowledge of Opengl and Asix 2d Function Dont Work And Dont have Methods for 3d opengl
-required to build from scartch
+required to build from scartch 
+also allow 2d graphics with opengl graphics to be draw on screen so its a mix of 3+2d
 
 ---
 
