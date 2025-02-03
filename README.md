@@ -30,12 +30,28 @@ version : 7.1
 ! important to note `optimize` or `optimized` flag may not work on all devices and cause proformance issue and 
 only works on (WINDOWS OS)
 
-Opengl Renderer Flag `opengl`
+Opengl Renderer
 change the rendering from pygame 2d render to opengl 3d render 
 Required Knowledge of Opengl and Asix 2d Function Dont Work And Dont have Methods for 3d opengl
 required to build from scartch 
 also allow 2d graphics with opengl graphics to be draw on screen so its a mix of 3+2d
 
+if you want to change the renderer you have to change core 2d window to opengl 3+2d supported window with function `opengl`
+first create a opengl renderer and window like 
+```
+glwin = opengl((x, y))
+```
+then set up core dont put any flags opengl is very faster then pygame itself and dont put any dimension because 
+we going to glwin instead and put opengl renderer using `xscreen` of core like 
+```
+from asix import *
+
+glwin = opengl((800, 600))
+
+core = Core(xscreen=glwin)
+
+```
+thats it now you can use any pyopengl function or core 3d methods
 ---
 
 ### Core Built-in's
