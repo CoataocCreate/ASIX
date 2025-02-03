@@ -6,12 +6,15 @@ from typing import List, Tuple, Optional
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
-import json
-import yaml
 from math import sin, cos, tan
+from math import pi as pie
+from pygame.locals import *
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
 
 class Core:
-    def __init__(self, width: int = 800, height: int = 600, flag=None) -> None:
+    def __init__(self, width: int = 800, height: int = 600, flag=None, xscreen=None) -> None:
         pygame.init()
 
         if width is not None:
@@ -37,41 +40,45 @@ class Core:
         else:
            print("Height is not defined")
 
-        self.flag = flag
-
         self.clock = pygame.time.Clock()
 
-        if not flag or flag == 'coreinf':
+        if not xscreen:
+
+         if not flag or flag == 'coreinf':
             self.screen = pygame.display.set_mode(
             (self.width, self.height))
 
-        elif flag == 'optimize' or 'optimized':
+         elif flag == 'optimize' or 'optimized':
             self.screen = pygame.display.set_mode(
             (self.width, self.height),
               pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.SRCALPHA | pygame.HWACCEL
-        )
-        elif flag == 'borderless':
+         ) 
+
+         elif flag == 'borderless':
             self.screen = pygame.display.set_mode(
             (self.width, self.height),
              pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.SRCALPHA | pygame.HWACCEL | pygame.NOFRAME
             )
-        elif flag == 'resizable':
+         elif flag == 'resizable':
             self.screen = pygame.display.set_mode(
             (self.width, self.height),
               pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.SRCALPHA | pygame.HWACCEL
-         )     
+         )  
+
+        else:
+           self.screen = xscreen   
             
         icon_size = (32, 32)
         transparent = pygame.Surface(icon_size)
         transparent.fill((241, 243, 249, 255))
         pygame.display.set_icon(transparent)
         pygame.display.set_caption('')
-
+        
         self.GLSO = {
                      'width':self.width,
                      'height':self.height,
                      'screen':self.screen,
-                     'flags':self.flag,
+                     'flags':flag,
                      'clock':self.clock, 
                      'font': None,
                      'type':"<Asix.Core>", 
@@ -83,7 +90,7 @@ class Core:
              print(f'{par} : {val}')
 
     def __str__(self) -> str:
-        return "<Asix.Core>"
+        return "<asix.core>"
     
     def icon(self, img):
         if img:
@@ -96,7 +103,8 @@ class Core:
          pygame.display.set_caption(title)
         else:
            print('Error : Provide title')
-
+    
+    @staticmethod
     def Font(filepath, size):
      return pygame.font.Font(filepath, size)
        
@@ -153,19 +161,15 @@ class Core:
             self.clock.tick(clock)
 
     @staticmethod
-    def quit(*args) -> None:
+    def quit(*args:str) -> None:
         """
         Handles the window close event. If a quit event is detected, it closes the Pygame window
         and exits the program.
         """
         if args:
             for key in args:
-                if key == 'esc':
-                    key = 'ESCAPE'
-                elif key == 'tab':
-                    key = 'TAB'
-                elif key == 'capslock':
-                    key = 'CAPSLOCK'
+                key = key
+
                 exec(f'Key = pygame.key.get_pressed()\nif Key[pygame.K_{key}]:\n    quit()\n')
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -183,9 +187,6 @@ class Core:
 
     def update(self):
         pygame.display.update()
-
-    def sleep(time:int) -> None:
-        time.sleep(time)
 
     def globe(self, x, y, radius, fill_color, border_color=None, border_width=0):
      """
@@ -208,6 +209,36 @@ class Core:
         # Draw only the filled circle
         pygame.draw.circle(self.screen, fill_color, (x, y), radius)
 
+    def clear():
+       sys.exit()
+
+    def OPerspective(self, fov=45, width=0, height=0, close_clip=0.1, far_clip=50.0):
+     gluPerspective(fov, (width / height), close_clip, far_clip)
+    
+    def OTranslatef(self, x=0.0, y=0.0, z=-5):
+       glTranslatef(x, y, z)
+
+    def OFont(name='Arial', size=24):
+       return pygame.font.SysFont(name, size)
+    
+    def OClear(self):
+       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    
+    def OPushMatrix(self):
+       glPushMatrix()
+
+    def ORotatef(self, angle, x, y, z):
+       glRotatef(angle, x, y, z)
+
+    def OBegin(self):
+       glBegin(GL_QUADS)
+    
+    def OEnd(self):
+       glEnd()
+
+    def OPopMatrix(self):
+       glPopMatrix()
+
 def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> None:
     """
     Takes a screenshot of the Pygame window and saves it as an image file.
@@ -227,9 +258,6 @@ def key() -> pygame.key.ScancodeWrapper:
 
 def R(x: int, y: int, w: int, h: int) -> pygame.Rect:
     return pygame.Rect(x, y, w, h)
-
-def RI(img: pygame.Surface) -> pygame.Rect:
-    return img.get_rect()
 
 def iload(file: str) -> pygame.Surface:
     return pygame.image.load(file)
@@ -261,9 +289,11 @@ class DTYPE:
     def delete(self, key):
          self.database.pop(key)
 
+def opengl(dimension):
+   return pygame.display.set_mode(dimension, DOUBLEBUF | OPENGL)
+
 
 WHITE: tuple = (255, 255, 255)
 BLACK: tuple = (0, 0, 0)
 RED: tuple = (255, 0, 0)
 GREY: tuple = (200, 200, 200)
-   
