@@ -185,6 +185,25 @@ thats it
 
 ---
 
+### Opengl Methods
+after setting flag `opengl` you can use asix O function O means Opengl
+
+#### OPerspective
+this function means Opengl Window Perspective its takes fov, near-clip, far-clip 
+and handle the aspect auto based on screen size 
+
+.1 fov means field of view how much you can see like in video games there FOV
+.2 near-clip means how much close can object can render like if we go more than 0.1 or custom value object stop rendering
+.3 far-clip means how much far object can render like if it go more far then we setted its stop render good for proformance for big games
+
+we can use it like 
+```
+_.OPerspective(fov=45, near_clip=0.1, far_clip=50.0)
+```
+its also have default settings if you dont want to set up it
+
+---
+
 ### Additional Methods
 these methods can get called direct without `core.`
 
