@@ -30,13 +30,12 @@ version : 7.1
 ! important to note `optimize` or `optimized` flag may not work on all devices and cause proformance issue and 
 only works on (WINDOWS OS)
 
-Opengl Renderer
+### Opengl Renderer
 change the rendering from pygame 2d render to opengl 3d render 
-Required Knowledge of Opengl and Asix 2d Function Dont Work And Dont have Methods for 3d opengl
-required to build from scartch 
-also allow 2d graphics with opengl graphics to be draw on screen so its a mix of 3+2d
+Required Knowledge of Opengl and Asix 2d Function Dont Work And core have Methods for 3d opengl
+but methods core.quit, core.flip, core.exit, core.clear works with opengl
 
-if you want to change the renderer you have to change core 2d window to opengl 3+2d supported window with function `opengl`
+if you want to change the renderer you have to change core 2d window to opengl 3d window use function `opengl`
 first create a opengl renderer and window like 
 ```
 glwin = opengl((x, y))
@@ -52,6 +51,150 @@ core = Core(xscreen=glwin)
 
 ```
 thats it now you can use any pyopengl function or core 3d methods
+you putting 3d window in core because core have 3d methods of opengl
+
+## Methods
+
+### OPerspective
+this function set setting of our rendering like
+   
+.1 fov means field of view how much you can see like in video games there FOV
+   
+.2 near-clip means how much close can object can render like if we go more than 0.1 or custom value object stop rendering
+   
+.3 far-clip means how much far object can render like if it go more far then we setted its stop render good for proformance for big games
+
+we can use it like 
+```python
+core.OPerspective(fov=45, near_clip=0.1, far_clip=50.0)
+```
+its also have default settings if you dont want to set up it
+
+### OTranslatef
+This Function moves away objects a little so we can see them 
+everything before this function is at (0, 0, 0) so we cant see them 
+because camera is also at 0,0,0 so its away objects a little so we can 
+see them from camera its takes (x, y, z) like
+```python
+core.OTranslatef(0.0, 0.0, -5)
+```
+its move objects a little back from z-axis
+
+### OClear
+its clear screen and all things ready to start window its get placed in loop like 
+```python
+while True:
+    _.quit('ESCAPE')
+    _.OClear()
+```
+
+### OPushMatrix
+Stack a Matrix so we can draw and transform our object like
+```python
+core.OPushMatrix()
+```
+
+### ORotatef
+this function help transform our object like its angle and its (x, y, z) like 
+```python
+core.OPushMatrix()
+core.ORotatef(rotate: var or value, 3, 1, 1)
+```
+
+### OBegin
+This Function tell renderer we about to draw our object like 
+```python
+core.OPushMatrix()
+core.ORotatef(rotate, 3, 1, 1)
+core.OBegin()
+```
+we first stack a matrix transform our object and then begin
+then we draw our vertices and surfaces like 
+```python
+core.OPushMatrix()
+core.ORotatef(rotate, 3, 1, 1)
+core.OBegin()
+
+for surface in surfaces:
+        x = 0
+        for vertex in surface:
+            glColor3fv((x, 0, 0))
+            glVertex3fv(vertices[vertex])
+            x += 0.1
+```
+
+### OEnd 
+this function tells renderer we finished drawing our object like
+```python
+core.OEnd()
+```
+
+### OPopMatrix
+this pop our matrix so there will be no matrix stack overflow or cause other objects issues like 
+```python
+core.OPopMatrix()
+```
+thats it you then flip it with `core.flip(clock=value)` 
+and `core.exit()` and `core.clear()`
+
+basic example a cube rotating in asix opengl implement i used `_` instead of `core` for less confusing :
+```python
+from asix import *
+
+glwin = opengl((800, 600))
+_ = Core(xscreen=glwin)
+
+_.OPerspective(fov=45, width=800, height=600, close_clip=0.1, far_clip=50.0)
+_.OTranslatef(0.0, 0.0, -5)
+
+vertices = [
+    (1, -1, -1),
+    (1, 1, -1),
+    (-1, 1, -1),
+    (-1, -1, -1),
+    (1, -1, 1),
+    (1, 1, 1),
+    (-1, -1, 1),
+    (-1, 1, 1)
+]
+
+surfaces = [
+    (0, 1, 2, 3),  
+    (3, 2, 7, 6),  
+    (1, 5, 6, 2),  
+    (4, 5, 1, 0),  
+    (4, 0, 3, 7), 
+    (4, 7, 6, 5)
+]
+
+rotate = 1
+
+while True:
+    _.quit('ESCAPE')
+    _.OClear()
+
+    _.OPushMatrix()
+    _.ORotatef(rotate, 3, 1, 1)
+    _.OBegin()
+
+    for surface in surfaces:
+        x = 0
+        for vertex in surface:
+            glColor3fv((x, 0, 0))
+            glVertex3fv(vertices[vertex])
+            x += 0.1
+    
+    _.OEnd()
+    _.OPopMatrix()
+
+    rotate += 0.1
+
+    _.flip(clock=60)
+
+_.exit()
+_.clear()
+```
+
 ---
 
 ### Core Built-in's
@@ -198,25 +341,6 @@ text_rect = text.get_rect(center=(400, 300))
 core.blit(text, text_rect)
 ```
 thats it
-
----
-
-### Opengl Methods
-after setting flag `opengl` you can use asix O function O means Opengl
-
-#### OPerspective
-this function means Opengl Window Perspective its takes fov, near-clip, far-clip 
-and handle the aspect auto based on screen size 
-
-.1 fov means field of view how much you can see like in video games there FOV
-.2 near-clip means how much close can object can render like if we go more than 0.1 or custom value object stop rendering
-.3 far-clip means how much far object can render like if it go more far then we setted its stop render good for proformance for big games
-
-we can use it like 
-```
-_.OPerspective(fov=45, near_clip=0.1, far_clip=50.0)
-```
-its also have default settings if you dont want to set up it
 
 ---
 
