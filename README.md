@@ -216,6 +216,11 @@ _.exit()
 ```
 its just calculate the radius x, y of a circle and have arg selector 's' for sin and 'c' for cos and 't' for tan
 
+#### pie
+in asix pie is math pi/pie function
+```
+angle += pie / 60
+```
 
 #### iload 
 iload loads an image like
