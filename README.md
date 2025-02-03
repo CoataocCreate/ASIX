@@ -5,6 +5,8 @@ The Asix Graphics Library
 Asix is a 2d python library build on top pygame engine its fully support pygame methods in its Core and also some methods of asix work with pygame
 methods are simple but powerfull
 
+## Version : Asix 7.7
+
 ## Install
 Run `pip install asix`
 
@@ -474,6 +476,30 @@ no `core.` required
 ---
 
 # Asix Release Notes
+
+## [v7.7] -2025
+
+### Added
+
+- Added Opengl Support
+
+- Added 3d Methods
+
+- Added math pie function
+
+### Changed
+
+- Improved Core Structure 
+
+- Improved Speed 
+
+- Improved Core Logic
+
+### Fixed
+
+- Fixed Opengl-Intregration Problems
+
+---
 
 ## [v7.6] -2025
 
