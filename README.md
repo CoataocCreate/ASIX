@@ -473,6 +473,80 @@ def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> Non
 ```
 no `core.` required
 
+# Pyvec
+### A Multi-Dimensional Array Vector Extension For Asix 
+
+## vec 
+
+The `Vector` class provides a flexible representation of mathematical vectors in N-dimensional space. It supports operations like addition, subtraction, scalar multiplication, dot product, and calculating magnitude, while also allowing access to vector components dynamically via attributes like `p1`, `p2`, `p3`, etc.
+
+You can create vectors with any number of components (2D, 3D, 4D, 5D, etc.) and access them either by passing individual arguments or by using lists and tuples.
+
+Creating a Vector
+You can create a vector by passing individual components, lists to the vec function:
+```
+v = vec(100, 100, 100)  # 3D Vector
+v2 = vec([1, 2, 3], [3, 6, 9)  # Combine lists and tuples
+```
+
+The vec function will flatten lists automatically and create a vector from the individual components.
+
+#### Accessing Vector Components
+
+The components of the vector are accessible dynamically with attributes like p1, p2, p3, etc.
+
+`print(v.p1, v.p2, v.p3)  # Output: 100.0 100.0 100.0`
+
+#### Vector Operations
+
+##### Addition
+```python
+v1 = vec(1, 2, 3)
+v2 = vec(4, 5, 6)
+v3 = v1 + v2
+print(v3.p1, v3.p2, v3.p3)  # Output: 5.0 7.0 9.0
+
+```
+
+##### Subtraction
+```python
+v1 = vec(5, 6, 7)
+v2 = vec(1, 2, 3)
+v3 = v1 - v2
+print(v3.p1, v3.p2, v3.p3)  # Output: 4.0 4.0 4.0
+
+```
+
+##### Scalar Multiplication
+```python
+v1 = vec(1, 2, 3)
+v2 = v1 * 2
+print(v2.p1, v2.p2, v2.p3)  # Output: 2.0 4.0 6.0
+
+```
+
+##### Dot Product
+```python
+v1 = vec(1, 2, 3)
+v2 = vec(4, 5, 6)
+result = v1.dot(v2)
+print(result)  # Output: 32.0
+```
+
+##### Magnitude
+```python
+v = vec(3, 4)
+magnitude = v.magnitude()
+print(magnitude)  # Output: 5.0
+```
+
+#### Example Usage
+```python 
+# Example: Creating a 5D vector and accessing its components
+v = vec(100, 100, 100, 100, 100)
+print(v.p1, v.p2, v.p3, v.p4, v.p5)  # Output: 100.0 100.0 100.0 100.0 100.0
+```
+
 ---
 
 # Asix Release Notes
