@@ -5,7 +5,7 @@ The Asix Graphics Library
 Asix is a 2d python library build on top pygame engine its fully support pygame methods in its Core and also some methods of asix work with pygame
 methods are simple but powerfull
 
-## Version : Asix 7.7
+## Version : Asix 7.8
 
 ## Install
 Run `pip install asix`
@@ -20,10 +20,13 @@ and last flags so flags are like special effects we can put on window and render
 flags are `borderless` makes screen without any border title buttons 
 `resizeable` makes screen resizeable and `optimize` 
 is a perfomance enchancer
-
 ! important to note `optimize` or `optimized` flag may not work on all devices and cause proformance issue like on gpu its only hardware accelarate
 
 ### Core Built-in's
+
+#### @once
+this is a decorator that make a function only run once no matter what in a loop no only run once 
+and you can put it on any function
 
 #### avents
 this function return access to event all of pygame like:
@@ -33,6 +36,7 @@ while True:
        if event.type == QUIT:
           sys.exit()
 ```
+its same like pygame just for event in avents()
 
 #### polygon
 
@@ -114,12 +118,6 @@ core.color(r, g, b)
 flip is a function that flips the screen like 
 ```
 core.flip()
-```
-
-#### exit :
-exit is a function that get set at the outside of the loop at end its terminate all window and resources like 
-```
-core.exit() 
 ```
 
 #### caption
@@ -235,23 +233,6 @@ _.exit()
 
 ---
 
-## Details 
-
-### Core Object
-```
-self.GLSO = {
-                     'width':self.width,
-                     'height':self.height,
-                     'flags':self.flag,
-                     'clock':self.clock, 
-                     'font':self.font,
-                     'type':"<Asix.Core>", 
-                     'version': "7.1"
-                     }
-```
-GLSO (Global Library System Object)
-Core have these and you can access them by `core.screen` and use that to use pygame function directly on the surface on asix
-
 # Easter Eggs 🎊
 
 ### Screenshot
@@ -261,83 +242,43 @@ def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> Non
 ```
 no `core.` required
 
-# Pyvec
-### A Multi-Dimensional Array Vector Extension For Asix 
-
-## vec 
-
-The `Vector` class provides a flexible representation of mathematical vectors in N-dimensional space. It supports operations like addition, subtraction, scalar multiplication, dot product, and calculating magnitude, while also allowing access to vector components dynamically via attributes like `p1`, `p2`, `p3`, etc.
-
-You can create vectors with any number of components (2D, 3D, 4D, 5D, etc.) and access them either by passing individual arguments or by using lists and tuples.
-
-Creating a Vector
-You can create a vector by passing individual components, lists to the vec function:
-```
-v = vec(100, 100, 100)  # 3D Vector
-v2 = vec([1, 2, 3], [3, 6, 9)  # Combine lists and tuples
-```
-
-The vec function will flatten lists automatically and create a vector from the individual components.
-
-#### Accessing Vector Components
-
-The components of the vector are accessible dynamically with attributes like p1, p2, p3, etc.
-
-`print(v.p1, v.p2, v.p3)  # Output: 100.0 100.0 100.0`
-
-#### Vector Operations
-
-##### Addition
-```python
-v1 = vec(1, 2, 3)
-v2 = vec(4, 5, 6)
-v3 = v1 + v2
-print(v3.p1, v3.p2, v3.p3)  # Output: 5.0 7.0 9.0
-
-```
-
-##### Subtraction
-```python
-v1 = vec(5, 6, 7)
-v2 = vec(1, 2, 3)
-v3 = v1 - v2
-print(v3.p1, v3.p2, v3.p3)  # Output: 4.0 4.0 4.0
-
-```
-
-##### Scalar Multiplication
-```python
-v1 = vec(1, 2, 3)
-v2 = v1 * 2
-print(v2.p1, v2.p2, v2.p3)  # Output: 2.0 4.0 6.0
-
-```
-
-##### Dot Product
-```python
-v1 = vec(1, 2, 3)
-v2 = vec(4, 5, 6)
-result = v1.dot(v2)
-print(result)  # Output: 32.0
-```
-
-##### Magnitude
-```python
-v = vec(3, 4)
-magnitude = v.magnitude()
-print(magnitude)  # Output: 5.0
-```
-
-#### Example Usage
-```python 
-# Example: Creating a 5D vector and accessing its components
-v = vec(100, 100, 100, 100, 100)
-print(v.p1, v.p2, v.p3, v.p4, v.p5)  # Output: 100.0 100.0 100.0 100.0 100.0
-```
-
 ---
 
 # Asix Release Notes
+
+## [v7.8] -2025
+
+### Added
+
+- new avents for manual events handling for more powerfull access
+- improved structure
+- improved proformance
+- new function GLS show all info about window realtime like its placed on top of flip
+  ```
+[width] → 800
+[height] → 600
+[screen] → <Surface(800x600x32 SW)>
+[flags] → optimize
+[clock] → <Clock(fps=0.00)>
+[font] → <pygame.font.Font object at 0x0000019F532B1AA0>
+[type] → <asix.core>
+[version] → 7.8
+[rendering-engine] → <pygame.render>
+[color] → (250, 250, 250)
+[Backend] → windows
+[Video-Display] → <built-in function Info>
+  ```
+- new @once decorator 
+
+### Changed
+
+- removed specifer R for rect R(x, y, w, h)
+- removed auto quit function core.quit()
+- removed draw function for rects
+- removed unused functions
+- removed config mode flag=config
+
+---
 
 ## [v7.7] -2025
 
@@ -392,3 +333,7 @@ print(v.p1, v.p2, v.p3, v.p4, v.p5)  # Output: 100.0 100.0 100.0 100.0 100.0
 ### Fixed
 
 - Fixed Logic Error Not specified self on (Core.[width, height]) inside error handle
+
+## Note From Developer
+i removed them in latest version because if we make it look good its have no power if its complex and no power its not useless if it simple and powerfull then its good
+i am trying to find a balance between power and simple
