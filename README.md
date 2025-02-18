@@ -217,29 +217,6 @@ or can be used with iload mentioned before
 img = isize(iload(path), width, height)
 ```
 
-### DTYPE Local DataClass
-its a local DataClass can use it to `store`, `fetch`, `delete` can store any datatype
-and its key, value nature like 
-```
-dt = DTYPE()
-
-dt.store(key, value)
-
-dt.fetch(key)
-
-dt.delete(key)
-
-! you can make as many as wanted like
-
-doreamon = DTYPE()
-
-this one is not linked to dt
-
-```
-! Its Optional
-
----
-
 basic structure
 ```
 from asix import *
