@@ -158,160 +158,476 @@ its just print that text in window
 
 ---
 
-# Rec Class Documentation
+```markdown
+## class rec
 
-The `Rec` class is an extended wrapper around the `pygame.Rect` class, providing additional convenience methods for handling rectangles in Pygame. This class simplifies common operations such as collision detection, moving, resizing, drawing rectangles, and more.
+A wrapper class for `pygame.Rect` to simplify rectangle operations.
 
-## Constructor:
-Rec(x, y, width, height)
+This class provides a convenient way to work with rectangles, offering methods for movement, scaling, collision detection, drawing, and more. It is designed to be used with Pygame and assumes you have a `core.screen` surface available for drawing operations.
 
-Parameters:
-- x (int): The x-coordinate of the rectangle’s top-left corner.
-- y (int): The y-coordinate of the rectangle’s top-left corner.
-- width (int): The width of the rectangle.
-- height (int): The height of the rectangle.
+```python
+class rec:
+    def __init__(self, x, y, width, height):
+```
 
-Example:
-rect = Rec(50, 50, 100, 200)
+### `__init__(self, x, y, width, height)`
 
-## Methods:
+Initializes a new `rec` object.
 
-### move_to(x, y)
-Moves the rectangle to the specified position (x, y).
+**Args:**
 
-Parameters:
-- x (int): The new x-coordinate for the top-left corner.
-- y (int): The new y-coordinate for the top-left corner.
+*   `x` (int): The x-coordinate of the top-left corner.
+*   `y` (int): The y-coordinate of the top-left corner.
+*   `width` (int): The width of the rectangle.
+*   `height` (int): The height of the rectangle.
 
-Example:
-rect.move_to(200, 300)
+**Example:**
 
-### scale(width, height)
-Scales the rectangle to the specified width and height.
+```python
+my_rect = rec(10, 20, 50, 30)
+```
 
-Parameters:
-- width (int): The new width of the rectangle.
-- height (int): The new height of the rectangle.
+---
 
-Example:
-rect.scale(150, 250)
+```python
+    def __repr__(self):
+```
 
-### collides_with(other)
-Checks if the current rectangle collides with another `Rec` or a `pygame.Rect`.
+### `__repr__(self)`
 
-Parameters:
-- other (Rec or pygame.Rect): The other rectangle to check for collision.
+Returns a string representation of the `rec` object.
 
-Returns:
-- `True` if the rectangles are colliding, otherwise `False`.
+This method provides a human-readable string that represents the rectangle's properties, useful for debugging and logging.
 
-Example:
-if rect.collides_with(another_rect):
-    print("Collision detected!")
+**Returns:**
 
-### center(x, y)
-Moves the center of the rectangle to the specified position (x, y).
+*   str: A string in the format `rec(x=..., y=..., width=..., height=...)`.
 
-Parameters:
-- x (int): The new x-coordinate for the center.
-- y (int): The new y-coordinate for the center.
+**Example:**
 
-Example:
-rect.center(400, 300)
+```python
+my_rect = rec(10, 20, 50, 30)
+print(my_rect)  # Output: rec(x=10, y=20, width=50, height=30)
+```
 
-### inflate(width, height)
-Inflates the rectangle by the given width and height (modifies the current rectangle).
+---
 
-Parameters:
-- width (int): The amount to inflate the width.
-- height (int): The amount to inflate the height.
+```python
+    def move_to(self, x, y):
+```
 
-Example:
-rect.inflate(20, 40)
+### `move_to(self, x, y)`
 
-### intersection(other)
-Returns a new `Rec` that represents the intersection of the current rectangle and another.
+Moves the rectangle to a new position.
 
-Parameters:
-- other (Rec or pygame.Rect): The other rectangle to find the intersection with.
+**Args:**
 
-Returns:
-- A new `Rec` representing the intersection area.
+*   `x` (int): The new x-coordinate for the top-left corner.
+*   `y` (int): The new y-coordinate for the top-left corner.
 
-Example:
-intersection_rect = rect.intersection(another_rect)
+**Example:**
 
-### move(x_offset, y_offset)
-Moves the rectangle by the specified x and y offsets.
+```python
+my_rect = rec(10, 20, 50, 30)
+my_rect.move_to(100, 150)
+```
 
-Parameters:
-- x_offset (int): The amount to move the rectangle along the x-axis.
-- y_offset (int): The amount to move the rectangle along the y-axis.
+---
 
-Example:
-rect.move(10, -5)
+```python
+    def scale(self, width, height):
+```
 
-### contains(x, y)
-Checks if a point (x, y) is inside the rectangle.
+### `scale(self, width, height)`
 
-Parameters:
-- x (int): The x-coordinate of the point to check.
-- y (int): The y-coordinate of the point to check.
+Scales the rectangle to a new size.
 
-Returns:
-- `True` if the point is inside the rectangle, otherwise `False`.
+**Args:**
 
-Example:
-if rect.contains(60, 80):
+*   `width` (int): The new width of the rectangle.
+*   `height` (int): The new height of the rectangle.
+
+**Example:**
+
+```python
+my_rect = rec(10, 20, 50, 30)
+my_rect.scale(100, 60)
+```
+
+---
+
+```python
+    def collide(self, other):
+```
+
+### `collide(self, other)`
+
+Checks if this rectangle collides with another rectangle.
+
+**Args:**
+
+*   `other` (rec or pygame.Rect): The rectangle to check collision with.
+
+**Returns:**
+
+*   bool: `True` if the rectangles collide, `False` otherwise.
+
+**Raises:**
+
+*   TypeError: If `other` is not a `rec` or `pygame.Rect` object.
+
+**Example:**
+
+```python
+rect1 = rec(10, 20, 50, 30)
+rect2 = rec(40, 10, 60, 40)
+if rect1.collide(rect2):
+    print("Rectangles collide!")
+```
+
+---
+
+```python
+    def center(self, x, y):
+```
+
+### `center(self, x, y)`
+
+Moves the center of the rectangle to a new position.
+
+**Args:**
+
+*   `x` (int): The new x-coordinate for the center of the rectangle.
+*   `y` (int): The new y-coordinate for the center of the rectangle.
+
+**Example:**
+
+```python
+my_rect = rec(10, 20, 50, 30)
+my_rect.center(100, 100)
+```
+
+---
+
+```python
+    def inflate(self, width, height):
+```
+
+### `inflate(self, width, height)`
+
+Inflates the rectangle by the specified width and height.
+
+This method modifies the rectangle in-place, expanding it outwards from its center.
+
+**Args:**
+
+*   `width` (int): The amount to inflate horizontally (can be negative to deflate).
+*   `height` (int): The amount to inflate vertically (can be negative to deflate).
+
+**Example:**
+
+```python
+my_rect = rec(10, 20, 50, 30)
+my_rect.inflate(20, 10)  # Inflates by 20 pixels horizontally and 10 pixels vertically
+```
+
+---
+
+```python
+    def intersection(self, other):
+```
+
+### `intersection(self, other)`
+
+Calculates the intersection of this rectangle with another rectangle.
+
+**Args:**
+
+*   `other` (rec or pygame.Rect): The rectangle to intersect with.
+
+**Returns:**
+
+*   rec: A new `rec` object representing the intersection of the two rectangles. If there is no intersection, the returned rectangle will have a width or height of 0.
+
+**Raises:**
+
+*   TypeError: If `other` is not a `rec` or `pygame.Rect` object.
+
+**Example:**
+
+```python
+rect1 = rec(10, 20, 50, 30)
+rect2 = rec(40, 10, 60, 40)
+intersection_rect = rect1.intersection(rect2)
+print(intersection_rect)
+```
+
+---
+
+```python
+    def move(self, x_offset, y_offset):
+```
+
+### `move(self, x_offset, y_offset)`
+
+Moves the rectangle by a given offset.
+
+This method modifies the rectangle's position in-place.
+
+**Args:**
+
+*   `x_offset` (int): The horizontal offset to move by.
+*   `y_offset` (int): The vertical offset to move by.
+
+**Example:**
+
+```python
+my_rect = rec(10, 20, 50, 30)
+my_rect.move(5, -10) # Move 5 pixels right and 10 pixels up
+```
+
+---
+
+```python
+    def contains(self, x, y):
+```
+
+### `contains(self, x, y)`
+
+Checks if a point is inside the rectangle.
+
+**Args:**
+
+*   `x` (int): The x-coordinate of the point.
+*   `y` (int): The y-coordinate of the point.
+
+**Returns:**
+
+*   bool: `True` if the point is inside the rectangle, `False` otherwise.
+
+**Example:**
+
+```python
+my_rect = rec(10, 20, 50, 30)
+if my_rect.contains(30, 30):
     print("Point is inside the rectangle.")
+```
 
-### get_position()
-Returns the current position (x, y) of the rectangle’s top-left corner.
+---
 
-Returns:
-- A tuple (x, y) representing the top-left corner of the rectangle.
+```python
+    def get_position(self):
+```
 
-Example:
-x, y = rect.get_position()
+### `get_position(self)`
 
-### get_size()
-Returns the current size (width, height) of the rectangle.
+Returns the current position of the rectangle.
 
-Returns:
-- A tuple (width, height) representing the size of the rectangle.
+**Returns:**
 
-Example:
-width, height = rect.get_size()
+*   tuple: A tuple `(x, y)` representing the top-left corner coordinates.
 
-### draw(surface, color)
-Draws the rectangle on a Pygame surface with the specified color.
+**Example:**
 
-Parameters:
-- surface (pygame.Surface): The Pygame surface to draw the rectangle on.
-- color (tuple): The color to draw the rectangle (e.g., (255, 0, 0) for red).
+```python
+my_rect = rec(10, 20, 50, 30)
+position = my_rect.get_position()
+print(position) # Output: (10, 20)
+```
 
-Example:
-rect.draw(screen, (255, 0, 0))
+---
 
-## Example Usage:
+```python
+    def get_size(self):
+```
+
+### `get_size(self)`
+
+Returns the current size of the rectangle.
+
+**Returns:**
+
+*   tuple: A tuple `(width, height)` representing the dimensions of the rectangle.
+
+**Example:**
+
+```python
+my_rect = rec(10, 20, 50, 30)
+size = my_rect.get_size()
+print(size) # Output: (50, 30)
+```
+
+---
+
+```python
+    def draw(self, surface, color, width=0):
+```
+
+### `draw(self, surface, color, width=0)`
+
+Draws the rectangle on a Pygame surface.
+
+**Args:**
+
+*   `surface` (pygame.Surface): The surface to draw the rectangle on.  If using within the core framework, you can use `core.screen`.
+*   `color` (tuple): The color of the rectangle in RGB format (e.g., `(255, 0, 0)` for red).
+*   `width` (int, optional): The width of the rectangle's border. If `0`, the rectangle is filled. Defaults to `0`.
+
+**Example:**
+
+```python
 import pygame
+# Assuming you have initialized pygame and have a screen surface called 'core.screen'
+my_rect = rec(10, 20, 50, 30)
+my_rect.draw(core.screen, (255, 255, 255)) # Draw a white filled rectangle
+my_rect.draw(core.screen, (0, 0, 255), width=2) # Draw a blue rectangle outline with thickness 2
+pygame.display.flip() # Update the display to show the drawn rectangle
+```
 
-pygame.init()
+---
 
-# Create a window
-screen = pygame.display.set_mode((800, 600))
+```python
+    def copy(self):
+```
 
-# Create Rec objects
-rect1 = Rec(100, 100, 150, 200)
-rect2 = Rec(250, 150, 100, 120)
+### `copy(self)`
 
-# Check for collision
-if rect1.collides_with(rect2):
-    print("Rectangles are colliding!")
+Creates and returns a copy of this `rec` object.
 
-# Draw the rectangles
-rect1.draw(screen, (255, 0, 0))  # Red rectangle
-rect2.draw(screen, (0, 255, 0))  # Green rectangle
+**Returns:**
+
+*   rec: A new `rec` object with the same position and size as the original.
+
+**Example:**
+
+```python
+rect1 = rec(10, 20, 50, 30)
+rect2 = rect1.copy()
+rect2.move_to(100, 100) # Modifying rect2 does not affect rect1
+```
+
+---
+
+```python
+    def target(self, other, surface, color=(0, 0, 0), width=1):
+```
+
+### `target(self, other, surface, color=(0, 0, 0), width=1)`
+
+Draws a line from the center of this rectangle to the center of another rectangle.
+
+**Args:**
+
+*   `other` (rec or pygame.Rect): The target rectangle to draw a line to.
+*   `surface` (pygame.Surface): The surface to draw the line on. If using within the core framework, you can use `core.screen`.
+*   `color` (tuple, optional): The color of the line in RGB format. Defaults to black `(0, 0, 0)`.
+*   `width` (int, optional): The thickness of the line. Defaults to `1`.
+
+**Raises:**
+
+*   TypeError: If `other` is not a `rec` or `pygame.Rect` object.
+
+**Example:**
+
+```python
+import pygame
+# Assuming you have initialized pygame and have a screen surface called 'core.screen'
+rect1 = rec(10, 20, 50, 30)
+rect2 = rec(150, 120, 40, 40)
+rect1.target(rect2, core.screen, color=(255, 0, 0), width=3) # Draw a red line of thickness 3
+pygame.display.flip()
+```
+
+---
+
+```python
+    def is_near(self, other, distance):
+```
+
+### `is_near(self, other, distance)`
+
+Checks if this rectangle is within a certain distance of another rectangle.
+
+**Args:**
+
+*   `other` (rec or pygame.Rect): The rectangle to check proximity to.
+*   `distance` (int): The maximum distance to consider "near".
+
+**Returns:**
+
+*   bool: `True` if the rectangles are within the specified distance, `False` otherwise.
+
+**Raises:**
+
+*   TypeError: If `other` is not a `rec` or `pygame.Rect` object.
+
+**Example:**
+
+```python
+rect1 = rec(10, 20, 50, 30)
+rect2 = rec(80, 50, 40, 40)
+if rect1.is_near(rect2, 20):
+    print("Rectangles are near each other.")
+```
+
+---
+
+```python
+    def align(self, alignment, width, height):
+```
+
+### `align(self, alignment, width, height)`
+
+Aligns the rectangle to a specific position within a given area.
+
+**Args:**
+
+*   `alignment` (str): The alignment type. Valid options are:
+    *   `'center'`
+    *   `'top-left'`
+    *   `'top-right'`
+    *   `'bottom-left'`
+    *   `'bottom-right'`
+*   `width` (int): The width of the area to align within.
+*   `height` (int): The height of the area to align within.
+
+**Example:**
+
+```python
+my_rect = rec(50, 50, 30, 20)
+my_rect.align('center', 800, 600) # Center the rectangle within an 800x600 area
+my_rect.align('top-left', 800, 600) # Move to top-left corner of an 800x600 area
+```
+
+---
+
+```python
+    def collides_with_any(self, others):
+```
+
+### `collides_with_any(self, others)`
+
+Checks if this rectangle collides with any rectangle in a list of rectangles.
+
+**Args:**
+
+*   `others` (list of rec): A list of `rec` objects to check for collisions with.
+
+**Returns:**
+
+*   bool: `True` if this rectangle collides with at least one rectangle in the list, `False` otherwise.
+
+**Example:**
+
+```python
+rect1 = rec(10, 20, 50, 30)
+rect2 = rec(40, 10, 60, 40)
+rect3 = rec(200, 200, 30, 30)
+rects_to_check = [rect2, rect3]
+
+if rect1.collides_with_any(rects_to_check):
+    print("rect1 collides with at least one rectangle in the list.")
+```
 
 ---
 
