@@ -5,10 +5,12 @@ The Asix Graphics Library
 Asix is a 2d python library build on top pygame engine its fully support pygame methods in its Core and also some methods of asix work with pygame
 methods are simple but powerfull
 
+! you can use any pygame function without import pygame and can get core.screen to do anything
+
 ## Version : Asix 7.8
 
 ## Install
-Run `pip install asix`
+Run `pip install asix==version` or `pip install asix`
 
 ### Core
 Core is the main Object of Screen and contains all methods you can use it like :
@@ -24,9 +26,61 @@ is a perfomance enchancer
 
 ### Core Built-in's
 
-#### @once
-this is a decorator that make a function only run once no matter what in a loop no only run once 
-and you can put it on any function
+### `@staticmethod console(*args, ed=0, capture=False)`
+
+The `console` static method allows you to execute shell commands from within your Python program. It provides functionality to add a delay between commands, capture the output of the command execution, and adjust command execution behavior based on the operating system.
+
+#### Parameters:
+- `*args` (varied types): 
+  - **Command(s) to be executed**. The commands can be provided as either strings or lists.
+    - If a **string** is provided, it represents the shell command to be executed.
+    - If a **list** is provided, it is treated as an already split command (i.e., no need for the function to parse the command into arguments).
+  - Multiple commands can be passed by separating them with commas in the `*args` list. Each command will be executed in the order they are passed.
+  
+- `ed` (int, default=0): 
+  - **Delay** between executing each command in seconds.
+  - Introduces a delay (`time.sleep(ed)`) after executing each command before executing the next one. Useful when you need to throttle command execution (e.g., avoid overwhelming a system with too many quick successive commands).
+  
+- `capture` (bool, default=False):
+  - **Whether to capture the output of the command**. 
+    - When set to `True`, the function will execute the command and capture the standard output (stdout) of the command.
+    - When set to `False`, the function will run the command but **not capture** its output, meaning it will not return anything. It simply executes the command in the background.
+
+#### Return Value:
+- **If `capture=True`**:
+  - The method will return the **output** of the command execution as a string, stripped of leading and trailing whitespace. This is useful when you need the result of a shell command for further processing in your Python program.
+  
+- **If `capture=False`**:
+  - The method will return `None`, since the function is only executing the command without capturing the output.
+
+#### Method Behavior:
+1. **Command Execution**:
+   - For each command in `*args`:
+     - If the command is a **string**, it will be executed using `subprocess.run()`.
+       - On **Windows (`os.name == "nt"`)**, the string command is passed to `subprocess.run()` with the `shell=True` argument to ensure correct execution in the shell.
+       - On **Unix-based systems** (like Linux or macOS), the string command is split using `shlex.split()` to break the string into a list of arguments. The resulting list is passed to `subprocess.run()` for execution.
+     - If the command is already a **list**, it is executed directly by passing it to `subprocess.run()` without modification.
+
+2. **Output Capture**:
+   - If `capture=True`, the function captures the output using `capture_output=True` and `text=True` in the `subprocess.run()` call.
+     - The output is then returned as a string with any leading/trailing whitespace removed.
+   - If `capture=False`, the function does not capture the output, and the command runs in the background without returning any result.
+
+3. **Delay Between Commands**:
+   - After each command execution, if `ed > 0`, the method introduces a pause using `time.sleep(ed)`. This delay is useful when you want to space out the execution of commands, especially when interacting with external systems or running multiple commands in sequence.
+
+its return output string which you can store in var and put it anywhere like core.text 
+```
+my_console_string = core.console("echo Hello, World!") # now contains "Hello, World!"
+```
+  
+---
+
+#### `@once` Decorator
+
+The `@once` decorator ensures that a function runs only once, regardless of how many times it is called — even in a loop.
+Once the function has been executed, subsequent calls to that function will be ignored.
+This decorator can be applied to any function where you want to guarantee that it only executes once.
 
 #### avents
 this function return access to event all of pygame like:
@@ -104,7 +158,173 @@ its just print that text in window
 
 ---
 
+# Rec Class Documentation
+
+The `Rec` class is an extended wrapper around the `pygame.Rect` class, providing additional convenience methods for handling rectangles in Pygame. This class simplifies common operations such as collision detection, moving, resizing, drawing rectangles, and more.
+
+## Constructor:
+Rec(x, y, width, height)
+
+Parameters:
+- x (int): The x-coordinate of the rectangle’s top-left corner.
+- y (int): The y-coordinate of the rectangle’s top-left corner.
+- width (int): The width of the rectangle.
+- height (int): The height of the rectangle.
+
+Example:
+rect = Rec(50, 50, 100, 200)
+
+## Methods:
+
+### move_to(x, y)
+Moves the rectangle to the specified position (x, y).
+
+Parameters:
+- x (int): The new x-coordinate for the top-left corner.
+- y (int): The new y-coordinate for the top-left corner.
+
+Example:
+rect.move_to(200, 300)
+
+### scale(width, height)
+Scales the rectangle to the specified width and height.
+
+Parameters:
+- width (int): The new width of the rectangle.
+- height (int): The new height of the rectangle.
+
+Example:
+rect.scale(150, 250)
+
+### collides_with(other)
+Checks if the current rectangle collides with another `Rec` or a `pygame.Rect`.
+
+Parameters:
+- other (Rec or pygame.Rect): The other rectangle to check for collision.
+
+Returns:
+- `True` if the rectangles are colliding, otherwise `False`.
+
+Example:
+if rect.collides_with(another_rect):
+    print("Collision detected!")
+
+### center(x, y)
+Moves the center of the rectangle to the specified position (x, y).
+
+Parameters:
+- x (int): The new x-coordinate for the center.
+- y (int): The new y-coordinate for the center.
+
+Example:
+rect.center(400, 300)
+
+### inflate(width, height)
+Inflates the rectangle by the given width and height (modifies the current rectangle).
+
+Parameters:
+- width (int): The amount to inflate the width.
+- height (int): The amount to inflate the height.
+
+Example:
+rect.inflate(20, 40)
+
+### intersection(other)
+Returns a new `Rec` that represents the intersection of the current rectangle and another.
+
+Parameters:
+- other (Rec or pygame.Rect): The other rectangle to find the intersection with.
+
+Returns:
+- A new `Rec` representing the intersection area.
+
+Example:
+intersection_rect = rect.intersection(another_rect)
+
+### move(x_offset, y_offset)
+Moves the rectangle by the specified x and y offsets.
+
+Parameters:
+- x_offset (int): The amount to move the rectangle along the x-axis.
+- y_offset (int): The amount to move the rectangle along the y-axis.
+
+Example:
+rect.move(10, -5)
+
+### contains(x, y)
+Checks if a point (x, y) is inside the rectangle.
+
+Parameters:
+- x (int): The x-coordinate of the point to check.
+- y (int): The y-coordinate of the point to check.
+
+Returns:
+- `True` if the point is inside the rectangle, otherwise `False`.
+
+Example:
+if rect.contains(60, 80):
+    print("Point is inside the rectangle.")
+
+### get_position()
+Returns the current position (x, y) of the rectangle’s top-left corner.
+
+Returns:
+- A tuple (x, y) representing the top-left corner of the rectangle.
+
+Example:
+x, y = rect.get_position()
+
+### get_size()
+Returns the current size (width, height) of the rectangle.
+
+Returns:
+- A tuple (width, height) representing the size of the rectangle.
+
+Example:
+width, height = rect.get_size()
+
+### draw(surface, color)
+Draws the rectangle on a Pygame surface with the specified color.
+
+Parameters:
+- surface (pygame.Surface): The Pygame surface to draw the rectangle on.
+- color (tuple): The color to draw the rectangle (e.g., (255, 0, 0) for red).
+
+Example:
+rect.draw(screen, (255, 0, 0))
+
+## Example Usage:
+import pygame
+
+pygame.init()
+
+# Create a window
+screen = pygame.display.set_mode((800, 600))
+
+# Create Rec objects
+rect1 = Rec(100, 100, 150, 200)
+rect2 = Rec(250, 150, 100, 120)
+
+# Check for collision
+if rect1.collides_with(rect2):
+    print("Rectangles are colliding!")
+
+# Draw the rectangles
+rect1.draw(screen, (255, 0, 0))  # Red rectangle
+rect2.draw(screen, (0, 255, 0))  # Green rectangle
+
+---
+
 ### Core Methods
+
+#### quit 
+for quiting use avents() like 
+```
+while True:
+  for event in avents():
+     if event.type == QUIT:
+        sys.exit()
+```
 
 #### color :
 
@@ -112,13 +332,16 @@ color is a function that sets color of the window like
 ```
 core.color(r, g, b)
 ```
+its has default white color means if you want white just call it empty like core.color()
 
 #### flip :
 
 flip is a function that flips the screen like 
 ```
-core.flip()
+core.flip(clock=value) # like 60
 ```
+its has global clock you can set means the time you created your Core a clock also get created core.clock so its always have a clock
+but you can also create your own
 
 #### caption
 used to set window title like
@@ -153,10 +376,31 @@ core.blit(text, text_rect)
 ```
 thats it
 
+### Packaging
+use `package__asio__()` call it anywhere in code and run the file with `python file package` 
+and a standalone exe generated of app
+can place it anywhere after the asix import 
+
 ---
 
 ### Additional Methods
 these methods can get called direct without `core.`
+
+### `collide(rect1, rect2)`
+
+The `collide` function checks if two rectangles are overlapping or colliding with each other.
+
+#### Parameters:
+- `rect1` (pygame.Rect): The first rectangle to check for collision. This should be a `pygame.Rect` object.
+- `rect2` (pygame.Rect): The second rectangle to check for collision. This should also be a `pygame.Rect` object.
+
+#### Return Value:
+- **bool**: The function returns `True` if the two rectangles are colliding (overlapping), and `False` if they are not.
+
+#### How It Works:
+- The function uses the `colliderect` method of `pygame.Rect` objects to determine if the two rectangles overlap.
+- `colliderect` checks if the area of the first rectangle (`rect1`) intersects with the area of the second rectangle (`rect2`).
+- If the rectangles overlap, the function will return `True`; otherwise, it will return `False`.
 
 #### sic :
 sic is a sin cos tan calcultion function its structure 
@@ -219,16 +463,15 @@ basic structure
 ```
 from asix import *
 
-_ = Core(800, 600, 'optimized')
+_ = Core(800, 600, 'optimize')
 
 while True:
-    _.quit('esc')
+    for event in avents():
+       if event.type == QUIT:
+          sys.exit()
     _.color(250, 250, 250)
- 
 
-    _.flip()
-
-_.exit()
+    _.flip(60)
 ```
 
 ---
@@ -250,11 +493,13 @@ no `core.` required
 
 ### Added
 
+- new rec class
 - new avents for manual events handling for more powerfull access
 - improved structure
 - improved proformance
 - new function GLS show all info about window realtime like its placed on top of flip
-  ```
+- fully functional core packager__asio__()
+```
 [width] → 800
 [height] → 600
 [screen] → <Surface(800x600x32 SW)>
@@ -267,8 +512,9 @@ no `core.` required
 [color] → (250, 250, 250)
 [Backend] → windows
 [Video-Display] → <built-in function Info>
-  ```
-- new @once decorator 
+```
+- new @once decorator
+- new collison function collide()
 
 ### Changed
 
