@@ -10,7 +10,10 @@ methods are simple but powerfull
 ## Version : Asix 7.8
 
 ## Install
-Run `pip install asix==version` or `pip install asix`
+Run `pip install asix==version` or `pip install asix` or
+you can download asix.py from source and import it like `from asix import *`
+! updates may be very slow on pip so download from source is better
+
 
 ### Core
 Core is the main Object of Screen and contains all methods you can use it like :
@@ -95,13 +98,13 @@ its same like pygame just for event in avents()
 #### polygon
 
 this function draw on points like for traingle we need 3 points 
-this function points not flipped like pygame.draw.polygon have unside down points
+this function points not flipped like pygame.draw.polygon have reversed points
 its auto correct them like 
 ```
 points = [(100, 100), (200, 100), (150, 200)]
 core.polygon(color, points)
 ```
-Draws a Triangle
+Draws a Triangle and you can put as many points as want 
 
 #### globe
 
@@ -160,7 +163,13 @@ text function is a basic text renderer like
 ```
 core.text(size, color, text, x, y, font_type: optional, rotation: require a angle var)
 ```
-its just print that text in window
+its just print that text in window 
+size is text size
+color is text color
+x is text x pos
+y is text y pos
+font_type for custom .ttf fonts you can put file name or path in a string
+rotation rotate the text
 
 ---
 
@@ -806,6 +815,14 @@ used to get a pic of window
 def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> None:
 ```
 no `core.` required
+
+---
+
+0# Explaination
+
+So Asix is a library build in pure python and you dont need to import python or math because they come with asix and
+Core is just a class which contains everthing while still have without class methods and its a simple wrapper of pygame
+you dont need to import anything except asix
 
 ---
 
