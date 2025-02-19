@@ -113,7 +113,8 @@ def globe(
     radius: Any,
     fill_color: Any,
     border_color: Any | None = None,
-    border_width: int = 0
+    border_width: int = 0,
+    rotation = angle
 ) -> None
 ```
 its takes x-pos and y-pos and radius means size of circles and fill_color means color of circle 
@@ -125,6 +126,9 @@ core.globe(100, 100, 70, (255, 255, 255), (r, g ,b), 10)
 
 !Note If you dont want border skip border_color and border_width args
 ```
+and rotation option rotate the circle 
+
+---
 
 #### blit :
 blit used for drawing images in mainloop like :
@@ -133,6 +137,8 @@ blit used for drawing images in mainloop like :
 core.blit(*args)
 ```
 works like pygame one like a surface and img or just img with x, y
+
+---
 
 #### key / K
 the key is a function that we can use with K to written very short input management script like 
