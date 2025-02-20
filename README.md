@@ -1406,6 +1406,99 @@ _.exit()
 <img src="https://i.ibb.co/6RH8p0rm/Screenshot-2025-02-20-163913.png" alt="Screenshot-2025-02-20-163913" border="0">
 
 ---
+## Solar System In Asix
+```
+from asix import *
+import math
+import time
+import random
+
+# --- Initialize Asix Core ---
+core = Core(800, 600, 'optimize')
+core.caption("Asix Solar System")
+
+# --- Colors ---
+sun_color = (255, 255, 0)       # Yellow for the Sun
+planet_colors = [
+    (100, 100, 255),   # Blue-ish for Earth-like
+    (200, 100, 50),    # Brown-ish for Mars-like
+    (180, 180, 180),   # Gray-ish for Mercury-like
+    (200, 200, 100),   # Cream-ish for Venus-like
+    (100, 200, 150),   # Teal-ish for Uranus-like
+    (150, 100, 200),   # Purple-ish for Neptune-like
+    (150, 150, 150),   # Dark gray for Moon-like
+    (220, 150, 80)     # Orange-ish for Jupiter-like
+]
+
+# --- Planet Data ---
+sun_radius = 50
+planets_data = [
+    {"name": "Mercury", "radius": 10, "orbit_radius": 80, "orbital_speed": 0.03, "color": planet_colors[2]},
+    {"name": "Venus",   "radius": 15, "orbit_radius": 130, "orbital_speed": 0.02, "color": planet_colors[3]},
+    {"name": "Earth",   "radius": 20, "orbit_radius": 200, "orbital_speed": 0.015, "color": planet_colors[0]},
+    {"name": "Mars",    "radius": 12, "orbit_radius": 280, "orbital_speed": 0.012, "color": planet_colors[1]},
+    {"name": "Jupiter", "radius": 40, "orbit_radius": 380, "orbital_speed": 0.008, "color": planet_colors[7]},
+    {"name": "Saturn",  "radius": 35, "orbit_radius": 480, "orbital_speed": 0.006, "color": planet_colors[6]}, # Using moon color for Saturn for now, can add rings later
+    {"name": "Uranus",  "radius": 30, "orbit_radius": 560, "orbital_speed": 0.004, "color": planet_colors[4]},
+    {"name": "Neptune", "radius": 30, "orbit_radius": 640, "orbital_speed": 0.003, "color": planet_colors[5]},
+    {"name": "Moon",    "radius": 5,  "orbit_radius": 250, "orbital_speed": 0.04, "color": planet_colors[6]}, # Moon orbiting Earth
+]
+
+# Initialize orbital angles for planets
+for planet in planets_data:
+    planet["angle"] = random.uniform(0, 2 * math.pi) # Random starting angle
+
+# --- Center of the Solar System ---
+center_x = 400
+center_y = 300
+
+# --- Game Loop ---
+running = True
+while running:
+    for event in avents():
+        if event.type == QUIT:
+            running = False
+            core.exit()
+
+    # --- Drawing Section ---
+    core.color(0, 0, 0)  # Black background
+
+    # 1. Draw the Sun
+    core.globe(center_x, center_y, sun_radius, sun_color)
+
+    # 2. Draw Planets
+    for planet in planets_data:
+        # Calculate planet position using sic function for circular motion
+        planet_x = sic(center_x, planet["orbit_radius"], planet["angle"], 'c')
+        planet_y = sic(center_y, planet["orbit_radius"], planet["angle"], 's')
+
+        # Draw the planet
+        core.globe(planet_x, planet_y, planet["radius"], planet["color"])
+
+        # (Optional) Draw planet name labels - could be added if needed
+        # core.text(14, (200, 200, 200), planet["name"], planet_x, planet_y + planet["radius"] + 10, center=True)
+
+        # For moon orbit around earth (example - can be adjusted)
+        if planet["name"] == "Moon":
+            earth = next((p for p in planets_data if p["name"] == "Earth"), None) # Find Earth's data
+            if earth:
+                earth_x = sic(center_x, earth["orbit_radius"], earth["angle"], 'c') # Get earth's position  <- Moved here, before moon calculation
+                earth_y = sic(center_y, earth["orbit_radius"], earth["angle"], 's')  
+                moon_orbit_x = sic(earth_x, planet["orbit_radius"], planet["angle"] * 2, 'c') # Moon orbits faster  <- Using calculated earth_x
+                moon_orbit_y = sic(earth_y, planet["orbit_radius"], planet["angle"] * 2, 's') # Moon orbits faster  <- Using calculated earth_y
+                core.globe(earth_x + moon_orbit_x - center_x, earth_y + moon_orbit_y - center_y, planet["radius"], planet["color"]) # Draw moon relative to earth
+
+        # Update planet angle for next frame (simulate orbit)
+        planet["angle"] += planet["orbital_speed"]
+
+    # --- Update Display ---
+    core.flip(60)
+
+# --- Exit ---
+core.exit()
+```
+
+---
 
 0# Explaination
 
