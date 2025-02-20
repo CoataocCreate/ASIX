@@ -991,6 +991,96 @@ def screenshot(surface: pygame.Surface, filename: str = 'screenshot.png') -> Non
 ```
 no `core.` required
 
+## Example Game in asix 
+a space rocks avoiding game
+```
+from asix import *
+import random
+
+# Initialize the game
+_ = Core(600, 400, 'optimize')
+_.caption("Simple Dodge Game (Text Only)")
+
+@cooldown(1)
+def Score():
+     global score
+     score += 1
+
+# Player setup
+player_x = 300
+player_y = 350
+player_speed = 5
+player_width = 20
+player_height = 20
+
+# Enemy setup
+enemies = []  # List to store enemies
+enemy_speed = 3
+spawn_timer = 60  # Spawn a new enemy every 60 frames
+enemy_width = 15
+enemy_height = 15
+
+# Score
+score = 0
+
+# Game loop
+running = True
+clock = _.clock
+
+while running:
+    clock.tick(60)
+    for event in avents():
+        if event.type == QUIT:
+            running = False
+
+    keys = key()
+    if keys[K("LEFT")]:
+        player_x -= player_speed
+    if keys[K("RIGHT")]:
+        player_x += player_speed
+
+    # Spawn enemies
+    spawn_timer -= 1
+    if spawn_timer <= 0:
+        enemy_x = random.randint(0, 585)
+        enemy_y = 0
+        enemies.append([enemy_x, enemy_y])
+        spawn_timer = 60  # Reset timer
+
+    # Move enemies
+    for enemy in enemies:
+        enemy[1] += enemy_speed
+
+    # Collision detection
+    player_rect = rec(player_x, player_y, player_width, player_height)
+    for enemy in enemies:
+        enemy_rect = rec(enemy[0], enemy[1], enemy_width, enemy_height)
+        if player_rect.collide(enemy_rect):
+            running = False  # Game over
+
+    # Remove off-screen enemies
+    enemies = [enemy for enemy in enemies if enemy[1] < 400]
+
+    # Draw everything
+    _.color(0, 0, 0)  # Black background
+
+    # Draw player (green rectangle)
+    pygame.draw.rect(_.screen, (0, 255, 0), (player_x, player_y, player_width, player_height))
+
+    # Draw enemies (red rectangles)
+    for enemy in enemies:
+        pygame.draw.rect(_.screen, (255, 0, 0), (enemy[0], enemy[1], enemy_width, enemy_height))
+
+    # Draw score
+    _.text(20, (255, 255, 255), f"Score: {score}", 50, 20)
+     
+    Score()
+
+    _.flip()
+
+_.exit()
+```
+
 ---
 
 0# Explaination
