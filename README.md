@@ -717,6 +717,181 @@ can place it anywhere after the asix import
 ### Additional Methods
 these methods can get called direct without `core.`
 
+```markdown
+# efload - Image Loading and Manipulation Class Documentation
+
+This document explains how to use the `efload` class and the `conpy` function provided in the Python code.  `efload` is designed to simplify image loading and basic manipulation using the PIL (Pillow) library, making images ready for use, especially with Pygame. The `conpy` function then bridges the gap to Pygame by converting the manipulated image into a Pygame Surface.
+
+## Getting Started
+
+To use `efload` and `conpy`, you need to have the following Python libraries installed:
+
+*   **Pillow (PIL):**  For image processing. Install using pip: `pip install Pillow`
+*   **Pygame:** For game development and image display. Install using pip: `pip install pygame`
+
+Make sure you have these libraries installed before using the code.
+
+## Using the `efload` Class
+
+The `efload` class is the core of this image handling system. It allows you to load an image and perform various operations on it.
+
+### 1. Importing the Class
+
+First, import the `efload` class and Pygame in your Python script:
+
+```python
+from efload_module import efload # Assuming you saved the code in efload_module.py
+import pygame
+
+pygame.init() # Initialize Pygame
+```
+
+### 2. Creating an `efload` Object
+
+To start working with an image, create an instance of the `efload` class, providing the path to your image file:
+
+```python
+image_handler = efload("path/to/your/image.png") # Replace with your image path
+```
+
+This will load the image located at `"path/to/your/image.png"` and prepare it for manipulation.  The `efload` object now holds the image data and provides methods to modify it.
+
+### 3. Available Methods for Image Manipulation
+
+Once you have an `efload` object, you can use the following methods to manipulate the loaded image:
+
+*   **`show()`**:  Displays the current image in your default image viewer. Useful for quickly previewing the image at any stage.
+
+    ```python
+    image_handler.show() # Shows the current image
+    ```
+
+*   **`resize(width, height)`**: Resizes the image to the specified `width` and `height` in pixels.
+
+    ```python
+    image_handler.resize(200, 150) # Resizes the image to 200 pixels wide and 150 pixels tall
+    ```
+
+*   **`rotate(deg)`**: Rotates the image by the given angle `deg` in degrees (counter-clockwise).
+
+    ```python
+    image_handler.rotate(45) # Rotates the image by 45 degrees
+    ```
+
+*   **`blur()`**: Applies a blur effect to the image.
+
+    ```python
+    image_handler.blur() # Applies a blur filter
+    ```
+
+*   **`sharp()`**: Sharpens the image, enhancing details.
+
+    ```python
+    image_handler.sharp() # Applies a sharpen filter
+    ```
+
+*   **`edgen()`**: Enhances the edges in the image, making them more prominent.
+
+    ```python
+    image_handler.edgen() # Applies an edge enhancement filter
+    ```
+
+*   **`clear()`**: Resets the image back to its original state as it was when first loaded. This undoes all manipulations performed since loading.
+
+    ```python
+    image_handler.clear() # Resets the image to its original loaded state
+    ```
+
+**Important Note:**  Most of these methods modify the `efload` object's image directly. They do not return a new image object.  If you want to keep the original image and work on a modified version, you would need to create a copy of the `efload` object (though this is not directly supported by the provided code as is).
+
+### 4. Accessing Image Information
+
+The `efload` object also stores information about the loaded image, which you can access as attributes:
+
+*   **`image_handler.format`**:  The format of the image file (e.g., 'PNG', 'JPEG').
+*   **`image_handler.size`**:  A tuple representing the image dimensions `(width, height)`.
+*   **`image_handler.mode`**: The color mode of the image (e.g., 'RGBA'). 'RGBA' includes an alpha channel for transparency.
+*   **`image_handler.data`**: The raw byte data of the image, often needed for lower-level graphics operations.
+
+## Using the `conpy` Function
+
+The `conpy` function is specifically designed to convert an `efload` object into a Pygame `Surface`. This is essential if you want to display or use the manipulated image within a Pygame application.
+
+### 1. Importing the Function
+
+Make sure the `conpy` function is available in your script (it should be in the same file as `efload` in the provided code).
+
+### 2. Converting to Pygame Surface
+
+To convert an `efload` object to a Pygame Surface, simply pass your `efload` object to the `conpy` function:
+
+```python
+pygame_surface = conpy(image_handler) # Converts the efload object to a Pygame Surface
+```
+
+Now, `pygame_surface` is a standard Pygame `Surface` object that you can use like any other Pygame Surface – for blitting onto the screen, further manipulation within Pygame, etc.
+
+### 3. Using the Pygame Surface
+
+Once you have the Pygame Surface, you can use standard Pygame methods to display it or work with it in your game or application. For example, to display it on a Pygame screen:
+
+```python
+screen = pygame.display.set_mode((800, 600)) # Create a Pygame display
+screen.blit(pygame_surface, (100, 100)) # Blit the image at position (100, 100)
+pygame.display.flip() # Update the display to show the blitted image
+
+# Keep the window open until closed (example event loop)
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+pygame.quit()
+```
+
+## Example Workflow
+
+Here's a simple example demonstrating a typical workflow:
+
+1.  Load an image using `efload`.
+2.  Resize and blur the image.
+3.  Convert the manipulated `efload` object to a Pygame Surface.
+4.  Display the Pygame Surface on a Pygame window.
+
+```python
+from efload_module import efload # Assuming saved in efload_module.py
+import pygame
+
+pygame.init()
+
+# Load the image
+image_handler = efload("path/to/your/image.png")
+
+# Resize and blur
+image_handler.resize(150, 100)
+image_handler.blur()
+
+# Convert to Pygame Surface
+pygame_surface = conpy(image_handler)
+
+# Pygame display setup and blitting (as shown in the previous section)
+screen = pygame.display.set_mode((800, 600))
+screen.blit(pygame_surface, (100, 100))
+pygame.display.flip()
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+pygame.quit()
+```
+
+This documentation should help you understand how to use the `efload` class and `conpy` function to load, manipulate, and prepare images for use with Pygame. Remember to replace `"path/to/your/image.png"` with the actual path to your image file.
+```
+
 ### `collide(rect1, rect2)`
 
 The `collide` function checks if two rectangles are overlapping or colliding with each other.
